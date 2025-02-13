@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD books Application</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center">Books Management</h1>
+      <hr />
+
+      <!-- Display All books -->
+      <h2>All books</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Pages</th>
+            <th>Published Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% locals.books.forEach(book => { %>
+          <tr>
+            <td><%= book.title %></td>
+            <td><%= book.author %></td>
+            <td><%= book.pages %></td>
+            <td><%= new Date(book.publishedDate).toLocaleDateString() %></td>
+            <td>
+              <form
+                action="/books/editBook/<%= book._id %>"
+                method="GET"
+                class="d-inline"
+              >
+                <button type="submit" class="btn btn-primary btn-sm">
+                  Edit
+                </button>
+              </form>
+              <form
+                action="/books/books/<%= book._id%>"
+                method="POST"
+                class="d-inline"
+              >
+                <button type="submit" class="btn btn-danger btn-sm">
+                  Delete
+                </button>
+              </form>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <!-- Add New books -->
+      <h2>Add a New books</h2>
+      <form action="/books/new" method="POST" enctype="multipart/form-data" class="mt-4">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" name="title" required />
+        </div>
+        <div class="mb-3">
+          <label for="author" class="form-label">Author</label>
+          <input type="text" class="form-control" id="author" name="author" required />
+        </div>
+        <div class="mb-3">
+          <label for="pages" class="form-label">Pages</label>
+          <input type="number" class="form-control" id="pages" name="pages" required />
+        </div>
+        <div class="mb-3">
+          <label for="publishedDate" class="form-label">Published Date</label>
+          <input type="date" class="form-control" id="publishedDate" name="publishedDate" required />
+        </div>
+        <div class="mb-3">
+          <label for="uploadbook" class="form-label">Upload Book</label>
+          <input type="file" class="form-control" name="uploadbook" id="uploadbook" required />
+        </div>
+        <button type="submit" class="btn btn-success">Add Book</button>
+      </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
